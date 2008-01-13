@@ -1,4 +1,4 @@
-  package Juba::Application
+   package Juba::Application
 # *************************
 ; our $VERSION='0.01'
 # *******************
@@ -16,6 +16,11 @@
 ; use lib '/home/ccls22/sknpp/HO/lib'
 ; use lib '/home/ccls22/sknpp/Package-Subroutine/lib'
 # >>>>
+
+; use lib 'lib-cpan/'
+; use lib 'lib-cpan/Hash-Path/lib/'
+
+; use lib 'Recipe/lib/'
 
 # load cgi::Untaint but overwrite plugin loading mechanism.
 ; use Juba::Untaint
