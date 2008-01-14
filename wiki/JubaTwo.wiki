@@ -1,0 +1,26 @@
+#summary Documenting the start of juba two
+
+= Introduction =
+
+Juba will become a web programming library for small perl based
+projects. The development focus is to implement a declarative 
+style to describe a web application.
+
+The another reason to have this project is the need of an environment
+where my tiny code creations can breath and see the light of the outside.
+
+= History =
+
+Juba was a real three day project of mine to implement a tiny website 
+editor. It was used for a course with kids to show them the way HTML
+works.
+
+= Details =
+
+Design goals:
+  * should be workable until my birthday this year
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
