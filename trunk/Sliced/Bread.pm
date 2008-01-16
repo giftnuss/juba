@@ -12,6 +12,12 @@
       )
     }
 
+; { use Juba::Document 'HTML'
+      
+  ; 
+
+  }
+
 ; 1
 
 __END__
