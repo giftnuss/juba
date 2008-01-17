@@ -5,19 +5,11 @@
 ; use strict; use warnings
 
 ; use Package::Subroutine
-#; use Package::Subroutine::Functions 'setglobal'
+; use Package::Subroutine::Functions qw/setglobal getglobal/
   
 ; sub import
     { my $pkg = shift
     ; export Package::Subroutine:: _ => grep { $pkg->can($_) } @_
-    
-    # install subroutines from package with a import function
-    # no export is done by the container object
-    # ; install Package::Subroutine $package, "import"
-	 #  => sub { no strict 'refs'
-	 #         ; export Package::Subroutine:: $package ,
-	 #	                @{"${package}::EXPORT"}
-	 #         }
     }
 
 ; sub coreelement
@@ -28,16 +20,24 @@
     ; $Juba::Document::export{$subroutine} = $package
 	 
     ; install Package::Subroutine $package => $subroutine
-         => sub { my $obj = $subref->(@_)
-                ; $_->broadcast($obj) # should be Juba::Document
+         => sub { # export the additional functions
+	          ; my $here = caller
+	          ; my %subs = getglobal($package,'%export')
+	          ; foreach my $func (keys %subs)
+	              { next if $here->can($func) 
+	              ; install Package::Subroutine:: $here => $func =>  $subs{$func}
+		      }
+	          # create object and send it to the document
+	          ; my $obj = $subref->(@_)
+                  ; $_->broadcast($obj) # should be Juba::Document
 	        }
     }
 
 ; sub has
     { my $package = caller
-    ; my $subs = [@_]
-	  
-	
+    ; my ($sub,%props) = @_
+    ; my $subref = $props{'run'} || sub { print "Hallo" }
+    ; setglobal($package,'%export',[$sub => $subref])
     }
 
 ; 1

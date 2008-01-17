@@ -2,6 +2,7 @@
 # ******************
 ; our $VERSION='0.01'
 # *******************
+; use Juba::Application
   
 ; use strict; use warnings; use utf8
   

@@ -1,14 +1,15 @@
-  package Package::Subroutine::Ensure
-# ***********************************
+  package Package::Subroutine::Functions
+# **************************************
 ; our $VERSION='0.01'
 # *******************
   
-; require 'Exporter'
+; require Exporter
   
 ; our @ISA = ('Exporter')
 ; our @EXPORT_OK = qw/
      ensure_arrayref
      setglobal
+     getglobal
    /
   
 ; sub ensure_arrayref
@@ -18,23 +19,35 @@
 ; sub setglobal
    { my ($pkg,$vars,$values) = ensure_arrayref(@_[0,1,2])
    ; my $alternatives        = $_[3] || {}
-   ; my $setter = { '@' => sub { push @{$varname},@_ }
+   ; my $varname
+   ; my $setter = 
+             { '@' => sub { push @{$varname},@_ }
 	          , '$' => sub { (${$varname}) = @_ }
-	          , '%' => sub { %{$varname} = @_ }
+	          , '%' => sub { %{$varname} = (%{$varname},@_) }
 	          , '&' => sub { *{$varname} = shift }
-                  , %$alternatives
-                  }
+             , %$alternatives
+             }
 	     
    ; foreach my $package (@$pkg)
        { foreach my $var (@$vars)
-           { my $type = substr($var,0,1)
-	   ; my $name = substr($var,1)
-	   ; my $varname = join('::',$package,$name)
-	   ; $setter->{$type}->(@$values)
-	   }
+           { my ($type,$name) = (substr($var,0,1),substr($var,1))
+           ; $varname = join('::',$package,$name)
+           ; $setter->{$type}->(@$values)
+           }
        }
    }
 
+; sub getglobal
+   { my ($pkg,$var)=@_
+   ; my ($type,$name) = (substr($var,0,1),substr($var,1))
+   ; my $varname = join('::',$pkg,$name)
+   ; { '$' => sub { ${$varname} }
+     , '@' => sub { wantarray ? @{$varname} : \@{$varname} }
+     , '%' => sub { wantarray ? %{$varname} : \%{$varname} }
+     , '&' => sub { \&{$varname} }
+     }->{$type}->()
+   }
+   
 ; 1
   
 __END__

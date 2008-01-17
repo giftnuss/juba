@@ -7,7 +7,7 @@
   ; { 
       use Juba::Document
   
-    ; dc
+    ; dc.title
     
     }
     

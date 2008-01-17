@@ -2,8 +2,9 @@
 # **********************************
 ; our $VERSION='0.01'
 # *******************
-; use Juba::Dot qw/coreelement/
-; use Coat
+; use Juba::Dot qw/coreelement has/
+
+; sub new {'#'}
   
 ; coreelement('dc')
   

@@ -32,6 +32,7 @@
 ; sub import
     { my $self = shift
     ; export_to(scalar caller)
+    ; strict->unimport
     ; $_ = $self->new(@_)
     }
 
@@ -59,7 +60,7 @@
 ; sub broadcast ($$)
     { my ($doc,$obj) = @_
     ; foreach my $sect ($doc->sections)
-        { $doc->$sect->pickup($obj)
+        { $doc->$sect->insert($obj) # should be pickup
 	}
     }
 
