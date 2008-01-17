@@ -1,0 +1,10 @@
+# Non Core Perl Modules used so far
+
+= Juba is written in Perl =
+
+You see a lot of totally wired (crazy) code, so which language is better to write this?
+
+= No this is not a serious project? =
+
+At this moment really not. It is far away from being usable so it can't be serious. But I 
+use a test driven approach, which proves that that the wiredness works. If there are 10*10*10 working tests this project becomes serious. The first ten is not reached now...
