@@ -2,7 +2,7 @@
 
 = Juba is written in Perl =
 
-You see a lot of totally wired (crazy) code, so which language is better to write this?
+You see a lot of totally weired (crazy) code, so which language is better to write this?
 
 = No this is not a serious project? =
 
