@@ -10,9 +10,10 @@
     { my ($package,@args)=@_
     ; my $makeconstr = 1
     ; my $class = caller
-    ; my @acc
-    ; my @methods
-    ; my @lvalue
+    ; my @acc         # all internal accessors
+    ; my @methods     # method changeable on a per object base
+    ; my @lvalue      # lvalue accessor
+    ; my (@rw,@ro)    # common accessors
 
     ; while(@args)
         { my $action = lc(shift @args)
@@ -23,13 +24,19 @@
             }
           elsif($action eq '_index')
             { my ($name,$type) = splice(@args,0,2)
-	    ; push @acc, $name, $type
+            ; push @acc, $name, $type
             }
-	  elsif($action eq '_lvalue')
-	    { my ($name,$type) = splice(@args,0,2)
-	    ; push @acc, "_$name", $type
-	    ; push @lvalue, $name
-	    }
+          elsif($action eq '_lvalue')
+            { my ($name,$type) = splice(@args,0,2)
+            ; push @acc, "_$name", $type
+            ; push @lvalue, $name
+            }
+          elsif($action eq '_rw')
+            {
+            }
+          elsif($action eq '_ro')
+            {
+            }
 	  # no actions => options
           elsif($action eq 'noconstructor')
             { $makeconstr = 0
