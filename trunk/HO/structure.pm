@@ -42,7 +42,7 @@ HO::structure - something like an object template
     _lvalue => _areas => '%',
     _lvalue => _root  => '$'
 
-; sub set_area
+; sub set_area ($$$)
     { my ($obj,$key,$node) = @_
     ; if( exists $obj->_areas->{$key} )
         { croak "The area '$key' already exists."
@@ -55,6 +55,11 @@ HO::structure - something like an object template
         } 
     ; $obj->_areas->{$key} = $node
     ; return $obj
+    }
+
+; sub area_setter ($)
+    { my $obj = shift
+    ; return sub { $obj->set_area(@_); return $_[1] }
     }
 
 ; sub set_root
@@ -70,6 +75,12 @@ HO::structure - something like an object template
     { my ($self) = @_
     ; return "".$self->_root
     }
+    
+; sub fill ($$@)
+    { my ($obj,$key,@args) = @_
+    ; $obj->_areas->{$key}->insert(@args)
+    ; return $obj
+    }
 
 #########################
 # Build time operations
@@ -77,13 +88,13 @@ HO::structure - something like an object template
 ; sub auto_slots
     { my ($self,@args) = @_
     ; my $obj = $self->new(@args)
-    ; my @nodes = keys %{$self->_areas}
+    ; my @nodes = keys %{$obj->_areas}
     ; $self->make_slots(@nodes)
     }
 
 ; sub make_slots
     { my ($self,@nodes)=@_
-    ; my $class = ref $self || $self
+    ; my $class = ref($self) || $self
     ; my @result
     ; { no strict 'refs'
       ; foreach my $slot (@nodes)
@@ -91,7 +102,9 @@ HO::structure - something like an object template
               { carp "The class '${class}' has a method '${slot}', no slot defined."
               ; next
               }
-          ; *{"${class}::${slot}"} = sub {  shift()->fill("${slot}", @_ ) }
+          ; *{"${class}::${slot}"} = sub 
+              {  shift()->fill("${slot}", @_ ) 
+              }
           ; push @result,$slot
           }
       }

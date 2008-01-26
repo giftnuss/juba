@@ -9,17 +9,17 @@
 ; our @ISA = ('Exporter')
 
 ; our @EXPORT = ()
-; our @EXPORT_OK = qw/node newline/
+; our @EXPORT_OK = qw/ho node newline/
 
-; use HO ()
+; use HO::node ()
 
 # functional constructor alias - future compatible -
 # good for example for learning by doing - it is not a good idea
 # to give it the same name like the class
 
-; sub node { new HO(@_) }
+; sub node { new HO::node(@_) }
 
-; sub newline() { node("\n") }
+; sub newline() { new HO::("\n") }
 
 ; 1
 
@@ -42,12 +42,13 @@ with hierarchical object (HO) modules.
 
 =head2 node()
 
-This is an alias to say C<new HO()>. The sense why to this in favour of the
-direct constructor call is that a fuction is easier replaced during runtime.
+This is an alias to say C<new HO::node::()>. The sense why to this in favour
+of the direct constructor call is that a fuction is easier replaced during
+runtime and it is a little bit less to type.
 
 =head2 newline()
 
-This only a function to say C<"\n"> which is used for the same reason.
+This is only a function to say C<"\n">.
 
 =head1 AUTHOR
 

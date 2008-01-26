@@ -6,32 +6,9 @@
 ; use strict
 ; require Carp 
   
-; our ($AUTOLOAD)
-  
-; DEFDEBUG:
-  { no strict 'refs'
-  ; unless( defined *HO::attr::DEBUG_AUTOLOAD{'CODE'} )
-      { sub DEBUG_AUTOLOAD () { 0 }
-      }
-  }
 
 ; use HO::class
     _lvalue => _attributes => '%'
-
-; sub AUTOLOAD : lvalue
-    { my $self=shift
-    ; Carp::croak "AUTOLOAD ($AUTOLOAD) called without object." 
-	  unless ref $self
-    ; Carp::carp "AUTOLOAD: ".$AUTOLOAD if DEBUG_AUTOLOAD
-    ; $AUTOLOAD =~ s/.*:://
-    ; my @arg=@_
-    ; if( @arg )
-        { $self->set_attribute($AUTOLOAD, @arg)
-        ; return $self
-        }
-    # don't say return, it is a lvalue sub
-    ; $self->get_attribute($AUTOLOAD)
-    }
 
 ; sub set_attribute
     { my ($self,$key,$value)=@_
@@ -56,7 +33,6 @@
     { delete $_[0]->_attributes->{$_[1]}
     ; $_[0]
     }
- 
 
 ; sub set_attributes
     { my ($obj,%attr)=@_
@@ -70,7 +46,7 @@
     ; my %attr   = %{$self->_attributes}
     ; foreach ( keys %attr )
         { $v=$attr{$_}
-	; $r .=  ref($v)     ? sprintf(" %s=\"%s\"",$_,"$v") 
+    ; $r .=  ref($v)    ? sprintf(" %s=\"%s\"",$_,"$v") 
 	      :  defined($v) ? sprintf(" %s=\"%s\"",$_,$v)
               :                sprintf(" %s",$_)
         }
