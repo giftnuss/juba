@@ -1,0 +1,260 @@
+#labels Phase-Design
+# Änderung in einer read onlie Kopie I
+{{{
+Index: Juba/Dot.pm
+===================================================================
+--- Juba/Dot.pm	(Revision 13)
++++ Juba/Dot.pm	(Arbeitskopie)
+@@ -14,7 +14,9 @@
+     }
+ 
+ # it is a possible base class for secondary elements    
+-; use HO::class
++; use HO::class
++    _rw => name => '$',
++    _rw => args => '@'
+     
+ # this stores the package name or so for Class
+ ; my $class
+Index: Juba/Document.pm
+===================================================================
+--- Juba/Document.pm	(Revision 13)
++++ Juba/Document.pm	(Arbeitskopie)
+@@ -2,16 +2,20 @@
+ # **********************
+ ; our $VERSION='0.01'
+ # *******************
++; use strict
++; use warnings
+ 
+ ################
+ # util classes
+-################
++################
++; use Sub::Uplevel qw/uplevel/
+ ; use Package::Subroutine
+ 
+ ################
+ # extensions
+ ################
+-; use Juba::Document::DublinCore
++; use Juba::Document::DublinCore
++; use Juba::Document::WebSite
+ 
+ ################
+ # class
+@@ -27,13 +31,31 @@
+     )
+     
+ ################
+-; our %export
++; our %export
++; our %container
+ ################
+ ; sub import
+     { my $self = shift
+     ; export_to(scalar caller)
+-    ; strict->unimport
+-    ; $_ = $self->new(@_)
++
++    ; unless(UNIVERSAL::isa($_,'Juba::Document'))
++        { $_ = $self->new(@_)
++        ; $container{'_'} = $_
++        }
++      else
++        { if($_->display->isa('Juba::Document::Website'))
++            {
++            }
++        }
++
++    ; if(defined($_[0]))
++        { if($_[0] eq 'HTML')
++            { my $html = $container{'HTML'} || 
++                do { $container{'HTML'} = $self->new('HTML') }
++            }
++        }
++    
++    ; strict->unimport('subs')
+     }
+ 
+ ; sub export_to
+@@ -48,8 +70,14 @@
+ # methods
+ ################
+ ; sub init
+-    { my $self = shift
+-    ; ($self->$_)=node() for $self->sections
++    { my $self = shift
++    ; ($self->$_)=node() for $self->sections
++    ; if(defined($_[0]))
++        { if($_[0] eq 'HTML')
++            { $self->display = new Juba::Document::WebSite::()
++            ; $container{'HTML'} = $self
++            }
++        }
+     ; $self
+     }
+     
+@@ -61,7 +89,7 @@
+     { my ($doc,$obj) = @_
+     ; foreach my $sect ($doc->sections)
+         { $doc->$sect->insert($obj) # should be pickup
+-	}
++	    }
+     }
+ 
+ ; sub dispatch
+Index: Juba/Document/WebSite.pm
+===================================================================
+--- Juba/Document/WebSite.pm	(Revision 0)
++++ Juba/Document/WebSite.pm	(Revision 0)
+@@ -0,0 +1,60 @@
++  package Juba::Document::WebSite
++# *******************************
++; our $VERSION='0.01'
++# *******************
++; use strict; use warnings
++
++; use base 'HO::structure'
++; use HO::HTML # Alle tags werden geladen wenn dies der erste Aufruf war
++#; use HO::HTML tags => [qw/html head body/]
++
++; sub tag
++    { # Aufgabe:
++      #    erzeuge ein Service Objekt mit einer do Funktion die folgendes tut
++      #       - wenn self keine root hat dann Argument als root
++      #       - für all kinder des Aruments erzeuge einen slot mit
++    ; return new Juba::Document::WebSite::Dot::
++    }
++    
++; sub meta
++    {
++    ; return new Juba::Document::WebSite::Dot::
++    }
++
++; sub new
++    { my $self = shift 
++    ; { use HO::HTML functional => 1 # Should be Juba::HTML
++      ; use Juba::Document 'HTML'
++      ; no warnings 'void'
++      
++      ; tag . Html() << Head() << Body()
++      ; tag . Head() << Encoding() << Title() << Meta() << Link() << Style() << Script()
++      
++      ; Encoding('utf-8')
++      ; meta.generator('Juba Document Maintenance Framework')
++      }
++    }
++    
++; package Juba::Document::WebSite::Dot
++# **************************************
++; use base 'HO'
++
++; sub dot
++    { my ($self,$arg) = @_
++    
++    ; my $doc = $_->_display
++    ; use Data::Dumper
++    ; print Dumper($arg)
++    ; print "$arg"
++        
++    }
++    
++; use overload '.' => 'dot'
++    
++; 1
++
++__END__
++
+Index: t/004_juba_document.t
+===================================================================
+--- t/004_juba_document.t	(Revision 13)
++++ t/004_juba_document.t	(Arbeitskopie)
+@@ -9,5 +9,12 @@
+   
+     ; dc.title
+     
+-    }
++    }
++    
++  ; { use Juba::Document 'HTML'
++    ;
++    }
++    
++; use Data::Dumper
++; print Dumper($_)
+     
+Index: t/ho/004_accessor.t
+===================================================================
+--- t/ho/004_accessor.t	(Revision 13)
++++ t/ho/004_accessor.t	(Arbeitskopie)
+@@ -1,6 +1,6 @@
+ use strict;
+ 
+-use Test::More tests => 7;
++use Test::More tests => 10;
+ 
+ require_ok('HO::accessor');
+ 
+@@ -28,6 +28,23 @@
+ 
+ my $tw2 = $twc->new;
+ 
+-Test::More::isa_ok($tw2,'T::one_without_constr');
++Test::More::isa_ok($tw2,'T::one_without_constr');
++
++; package T::entity
++; BEGIN 
++    { Test::More::use_ok
++        ( 'HO::class',
++             _ro => name => '$',
++             _ro => href => '$'
++        )
++    }
++    
++; my $e = new T::entity::
++; $e->[$e->_name] = 'timestamp'
++; $e->[$e->_href] = 'http://localhost:8091/time/'
++
++; Test::More::is($e->name,'timestamp')
++; Test::More::is($e->href,'http://localhost:8091/time/')
++    
+ 
+ 
+Index: HO/HTML.pm
+===================================================================
+--- HO/HTML.pm	(Revision 13)
++++ HO/HTML.pm	(Arbeitskopie)
+@@ -48,14 +48,14 @@
+     , 'dfn'      => [ 0, 'Dfn',        0, 0, 1, 0, ]
+     , 'dir'      => [ 0, 'Dir',        0, 0, 0, 1, ]
+     , 'div'      => [ 0, 'Div',        0, 0, 1, 1, ]
+-    , 'dl'       => [ 0, 'Dl',         0, 1, 1, ]
+-    , 'dt'       => [ 0, 'Dt',         0, 1, 0, ]
+-    , 'em'       => [ 0, 'Em',         0, 1, 0, ]
+-    , 'fieldset' => [ 0, 'Fieldset',   0, 1, 1, ]
+-    , 'font'     => [ 0, 'Font',       0, 0, 0, ]
+-    , 'form'     => [ 0, 'Form',       0, 1, 1, ]
+-    , 'frame'    => [ 0, 'Frame',      0, 0, 0, ]
+-    , 'frameset' => [ 0, 'Frameset',   0, 0, 0, ]
++    , 'dl'       => [ 0, 'Dl',         0, 0, 1, 1, ]
++    , 'dt'       => [ 0, 'Dt',         0, 0, 1, 0, ]
++    , 'em'       => [ 0, 'Em',         0, 0, 1, 0, ]
++    , 'fieldset' => [ 0, 'Fieldset',   0, 0, 1, 1, ]
++    , 'font'     => [ 0, 'Font',       0, 0, 0, 0, ]
++    , 'form'     => [ 0, 'Form',       0, 0, 1, 1, ]
++    , 'frame'    => [ 0, 'Frame',      0, 1, 0, 0, ]
++    , 'frameset' => [ 0, 'Frameset',   0, 0, 0, 0, ]
+     , 'h1'       => [ 0, 'H1',         1, 0, 1, 1, ]
+     , 'h2'       => [ 0, 'H2',         1, 0, 1, 1, ]
+     , 'h3'       => [ 0, 'H3',         1, 0, 1, 1, ]
+@@ -118,7 +118,7 @@
+ ; our @baseclasses =
+     ( 'HO::HTML::element'
+     , 'HO::HTML::element::header'
+-    , 'HO::HTML::Input'
++    , 'HO::HTML::element::input'
+     )
+ 
+ ; sub seq_props
+}}}
