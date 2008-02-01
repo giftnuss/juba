@@ -4,10 +4,14 @@
   ; BEGIN { require_ok('Juba::Document') }
   
   ; use strict
-  ; { 
-      use Juba::Document
+  ; { package T::doc
+    ; use Juba::Document
   
-    ; dc.title
+    ; 
+    ; dc.title("juba")
     
     }
+    
+  ; use Data::Dumper
+  ; print Dumper($T::doc::Document{'_'})
     

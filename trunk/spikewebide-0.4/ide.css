@@ -1,0 +1,27 @@
+body{
+   color:#336699;
+   font-family:'trebuchet ms',helvetica,sans-serif;
+   font-size:90%;
+   font-weight:bold;}
+select{
+   background-color:#e5e5e5;
+   color:#336699;
+   font-family:'trebuchet ms',helvetica,sans-serif;
+   font-size:90%;
+   font-weight:bold;
+   border:2px solid;
+   border-top-color:black;
+   border-left-color:black;
+   border-right-color:black;
+   border-bottom-color:black;}
+input{
+   background-color:#e5e5e5;
+   color:#336699;
+   font-family:'trebuchet ms',helvetica,sans-serif;
+   font-size:90%;
+   font-weight:bold;
+   border:2px solid;
+   border-top-color:black;
+   border-left-color:black;
+   border-right-color:black;
+   border-bottom-color:black;}

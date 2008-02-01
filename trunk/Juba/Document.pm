@@ -7,6 +7,7 @@
 # util classes
 ################
 ; use Package::Subroutine
+; use Package::Subroutine::Functions qw/getglobal setglobal/
 
 ################
 # extensions
@@ -30,10 +31,15 @@
 ; our %export
 ################
 ; sub import
-    { my $self = shift
-    ; export_to(scalar caller)
+    { my ($self,$id) = (@_,'_') # _ used as generic id
+    ; my $class = caller
+    ; export_to($class)
     ; strict->unimport
-    ; $_ = $self->new(@_)
+    
+    ; unless($_ = getglobal($class,'%Document')->{$id})
+        { $_ = $self->new(@_)
+        ; setglobal($class,'%Document',[$id,$_])
+        }
     }
 
 ; sub export_to
@@ -61,21 +67,20 @@
     { my ($doc,$obj) = @_
     ; foreach my $sect ($doc->sections)
         { $doc->$sect->insert($obj) # should be pickup
-	}
+        }
     }
 
 ; sub dispatch
     { my ($obj,$method,@args) = @_
     ; foreach my $sect ($obj->sections)
         { if(my $m = $obj->$sect->can($method))
-	    { $_ = $obj
-	    ; $m->(@args)
-	    }
-	}
+            { $_ = $obj
+            ; $m->(@args)
+            }
+	     }
     }
 
 ; 1
-  
 
 __END__
   

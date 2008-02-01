@@ -1,0 +1,35 @@
+- A plugin .conf file must have the following mandatory lines shown by >
+- Those lines that are optional are denoted as # 
+
+> uniquely defines plugin - prevents duplicates, etc.
+plugin.display.name='...'        
+# tells the ide what style information to use
+# probably needs to parallel choices within loadTool
+# good example of how IDE can be easily extended in terms of display
+plugin.css.name='...\n...\n...'
+> defines where the ide looks for updated output
+> make sure the following configuration options actually output to this path
+> be sure to keep the '/' at the end of the string - if directory
+>     - for the python server to concatenate tool-specific urls correctly
+plugin.outdir='...'     
+
+> display name to be outputted on generated form
+execution.display='...'
+> base string to be executed (before any subsequent option strings)
+execution.value='...'
+
+------------------------------------------------------------------------------------
+
+- Subsequent options may be concatenated to the end of the execution.value command
+  with the following protocol:
+
+> tells ide to concatenate more defined text
+{option}.type='option'
+> display name to be outputted on generated form
+{option}.display='...'
+> defines option on command string - should accomodate spaces in concatenation
+{option}.cliexec='...'
+> determines which options come first, second, etc.
+{option}.cliorder='...'
+> corresponding value to defined option
+{option}.value='...'

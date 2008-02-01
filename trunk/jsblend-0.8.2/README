@@ -1,0 +1,111 @@
+#######################################################################
+## 
+## README for JSBlend
+## 
+## Author: Nimish Pachapurkar
+## (C) 2007, SpikeSource, Inc.
+##
+## Credits: Keisuke Omi (UI Design)
+## 
+## $Id: README 81591 2007-06-30 01:12:21Z npac $
+#######################################################################
+
+Prerequisites:
+  
+You can choose the built-in Python server as a backend. The PHP scripts that shipped
+with earlier versions of JSBlend are deprecated, not maintained, and do not support 
+many features. They will removed in future releases.
+
+  * For Python server: Python 2.4+
+  * GNU Diffutils 2.8.7 or newer
+    * Should be available on all Linux installations by default
+    * For Windows, get the Windows native binaries for GNU Diffutils from 
+      http://gnuwin32.sourceforge.net/packages/diffutils.htm
+      Make sure that diff.exe is in PATH.
+  * Remote file support
+    * On Linux, SCP is supported by using pexpect (http://pexpect.sourceforge.net/).
+      Relevant files are already included in this release. No further installation is needed.
+    * For using remote file editing over SCP on Windows, please install
+      WinSCP from http://winscp.net/eng/index.php. Make sure WinSCP.exe and 
+      WinSCP.com are in PATH.
+    * HTTP and HTTPS are supported using Python urllib2 module. No special installation is
+      needed on either of the platforms.
+  * You may want to run the python server over SSL. For this, you will have to install 
+    pyOpenSSL (http://pyopenssl.sourceforge.net/). If the server does not find this module
+    it will startup in a non-secure HTTP mode and listen on port 8888. In secure mode, the 
+    server listens on port 8443.
+    A provisional certificate is included in the ssl/server.pem file. You may decide to use
+    your own certificate by replace this file.
+    If you are using password authentication over scp for remote files, secure mode is strongly
+    recommended.
+  * Browsers
+    * Firefox 2 or newer is preferred. (http://www.getfirefox.com)
+    * IE 7 or newer (works okay - may not be as pretty).
+
+Installation:
+
+  * Linux:
+    
+    1. Untar the tarball in a directory of your choice.
+         cd /var/www/localhost/htdocs
+         tar -xzf jsblend-<ver>.tar.gz
+
+    2. Start the python server. [Optional]
+         cd jsblend-<ver>
+         python diffserver.py
+
+    3. Access viewdiff.html from your browser
+         firefox "https://localhost:8443/viewdiff.html" OR
+         firefox "http://localhost:8888/viewdiff.html"
+
+       OR
+       Invoke the command line interface for JSBlend:
+         python jsblend.py <left-file> <right-file> [-b <browser-executable] [-r] [-s <server-url>]
+       This command will also start the server if it not running.
+
+    4. Sample files for diff/merge are located under "samples" directory.
+       Enter the paths for files "httpd.conf" and "httpd.conf.new"
+       in the 'Left' and 'Right' text boxes and click on [Get Diff].
+
+    5. If the server is running in a separate window, press CTRL-C to stop it.
+       If it was started by jsblend.py command, find the PID of python process that is
+       running 'diffserver.py' and kill it. The server output will appear in output.log.
+        
+  * Windows:
+
+    Follow the same steps as above, except use appropriate paths.
+
+IMPORTANT NOTES:
+
+  * On Linux, Password authentication is supported for accessing remote files over scp. We use the
+    python pexpect module (http://pexpect.sourceforge.net/) for this. If you have trouble accessing
+    remote files, it might be because your 'ssh' and 'scp' commands might be using different prompts 
+    than found on most Linux distributions. In such cases, you should set up password-less access over ssh.
+    (See below.)
+
+  * On Windows, password authentication is not supported since pexpect does not work natively on Windows.
+    You may be able to use it with Cygwin. In that case, just follow Linux instructions. If you want to use
+    remote file support over scp on Windows, make sure you setup password-less access over ssh using 
+    PuTTY and WinSCP. (See below)
+
+  * Password-less SSH:
+    * For remote file support over scp, you may have to set up password-less ssh/scp access 
+      from the machine running JSBlend server to the remote machine. This is usually done using 
+      public-private key authentication. 
+
+    * On Windows, you should use puttygen.exe that comes with WinSCP to generate a public/private key
+      pair. The public key should be copied to your remote machine in the appropriate directory. Then
+      the PuTTY Authentication Agent (pagent.exe) should be started and the private key added to the daemon.
+      See "http://tartarus.org/~simon/putty-snapshots/htmldoc/Chapter8.html" for more information.
+
+      WARNING: WinSCP also allows specifying password in the connection url by using the format 
+               'scp://user:password@host:/path'. This is very insecure and should NOT be used. 
+               Password specified like this will be visible in the Web Browser. 
+
+    * On Linux, generate a key pair using 'ssh-keygen -t dsa'. Copy the private key as ~/.ssh/id_dsa. The 
+      public key should be added to the remote machines ~/.ssh/authorized_keys file.
+
+Bugs and Feedback:
+
+  Use JSBlend forum (http://developer.spikesource.com/forums/viewforum.php?f=91) to report any issues or leave your feedback.
+

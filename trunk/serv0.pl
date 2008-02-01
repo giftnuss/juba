@@ -17,7 +17,13 @@
 
 ; use HTTP::Server::Singlethreaded function 
     => { '/time/' => sub { "Content-type: text/plain\n\n".localtime }
-       , '/quit/' => sub { $QUITVAR=1 } 
+       , '/quit/' => sub { $QUITVAR=1 }
+       , map {("/$_/" => sub 
+           { my $page = "Content-type: text/plain\n\n"
+           ; open OUT , ">",\$page; my $old=select(OUT)
+           ; do "$_.pl"
+           ; close OUT; select($old); return $page
+           }) } 1..2
        }
 
 ; Serve() while !$QUITVAR

@@ -1,0 +1,43 @@
+#
+# Listen: Allows you to bind Apache to specific IP addresses and/or
+# ports, instead of the default. See also the <VirtualHost>
+# directive.
+#
+# Change this to Listen on specific IP addresses as shown below to
+# prevent Apache from glomming onto all bound IP addresses.
+#
+#Listen 12.34.56.78:80
+Listen localhost:80
+
+#
+# Dynamic Shared Object (DSO) Support
+#
+# To be able to use the functionality of a module which was built as a DSO you
+# have to place corresponding `LoadModule' lines at this location so the
+# directives contained in it are actually available _before_ they are used.
+LoadModule actions_module modules/mod_actions.so
+LoadModule alias_module modules/mod_alias.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+LoadModule auth_digest_module modules/mod_auth_digest.so
+LoadModule authn_anon_module modules/mod_authn_anon.so
+#LoadModule authn_dbd_module modules/mod_authn_dbd.so
+# User/Group: The name (or #number) of the user/group to run httpd as.
+# It is usually good practice to create a dedicated user and group for
+# running httpd, as with most system services.
+#
+User oss
+Group oss
+
+# 'Main' server configuration
+#
+# The directives in this section set up the values used by the 'main'
+# server, which responds to any requests that aren't handled by a
+# <VirtualHost> definition.  These values also provide defaults for
+#
+# Gentoo has made using virtual-hosts easy. In the vhosts.d we include
+# a default vhost (enabled by adding -D DEFAULT_VHOST to
+# APACHE2_OPTS in /etc/conf.d/apache2), and an example virtual host
+# to use as a template for creating your own virtual host.
+#
+Include /opt/spikesource/etc/apache2/vhosts.d/*.conf
+## New comment line

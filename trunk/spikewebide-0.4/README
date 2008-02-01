@@ -1,0 +1,44 @@
+README for Spike Web IDE
+Author: Ashwin Kumar - askumar
+(C) 2007, SpikeSource, Inc.
+##############################
+
+This Web IDE is a very basic tool that allows a user to manipulate any sort of application,
+so long as it may be invoked through command line and it outputs (preferrably html) to
+a specified directory.
+
+This will benefit anyone wishing to bypass a lot of repetitive command line typing.
+Suppose you are developing a PHP application, and you use PHPCheckstyle, PHP Security
+Audit, and PHP Code Coverage to continually refresh output regarding your application.
+You could plugin these tools with the information you need, ultimately reducing your 
+pains to the click of an execute button.
+
+The IDE simply uses .conf files from the conf/ directory to concatentate together an 
+executable shell command string. See conf/Conf_Directions for more information. These
+.conf files will define how to do the background execution, as well as optionally
+determining how to present the same information on the generated HTML form.
+
+Prerequisites:
+
+You can choose either the built-in Python server or the PHP scripts as back end.
+
+  * For Python server: Python 2.4+
+  * For PHP: PHP 5+ with Apache 2
+
+Execution: 
+
+  * Apache 2 with PHP 5+ module:
+
+      1. Place entire Web IDE folder somewhere within the Apache document root.
+         Navigate to the folder through a browser. The Apache configuration should
+         be set to automatically load index.html.
+
+  * Python Server:
+ 
+      1. Invoke the lightweight server:
+  
+          > python ideserver.py
+
+      2. Bring up a browser and enter the following as the url:
+   
+          http://localhost:8888/

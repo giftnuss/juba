@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <!--
+    Author: Nimish Pachapurkar
+    (C) 2007, SpikeSource, Inc.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>JSBlend: A Javascript Diff/Merge Tool</title>
+<link href="css/diff.css" rel="stylesheet" type="text/css">
+<!--[if IE 6]>
+    <link rel="stylesheet" href="css/ie6.css" type="text/css" media="all" charset="utf-8" />
+<![endif]-->
+<!--[if IE 7]>
+    <link rel="stylesheet" href="css/ie7.css" type="text/css" media="all" charset="utf-8" />
+<![endif]-->
+<script language="Javascript" type="text/javascript" src="scriptaculous/lib/prototype.js"></script>
+<script language="Javascript" type="text/javascript" src="scriptaculous/src/scriptaculous.js"></script>
+<script language="Javascript" type="text/javascript" src="js/difflib.js"></script>
+<script language="Javascript" type="text/javascript" src="js/stringhelper.js"></script>
+<script language="Javascript" type="text/javascript" src="js/diff.js"></script>
+<script language="Javascript" type="text/javascript">
+  function requestDiff() {
+    var l = $("left").value;
+    var r = $("right").value;
+    var readonly = "false";
+    if($("readonly").checked) {
+      readonly = "true";
+    }
+    if(readonly != "true" && (l.indexOf('http://') == 0 || r.indexOf('http://') == 0 || l.indexOf('https://') == 0 || r.indexOf('https://') == 0)) {
+      alert("One or both of your remote files cannot be written back. They will be saved locally to '/tmp' or 'C:\\Temp'.");
+    }
+    window.location = "viewdiff.html?left=" + escape(l) + "&right=" + escape(r) + "&readonly=" + readonly;
+  }
+</script>
+</head>
+<body onload="javascript:return getDiff();">
+  <textarea rows="10" cols="80" id="actions" style="display: none; background-color:rgb(225,225,225);"></textarea>
+  <input type="text" style="display: none;" id="thisaction" size="80" value=""/>
+  <form name="frmPasswd" onsubmit="sendPasswd(); return false;">
+    <div id="passwd_c" style="display: none;">
+      <table style="width: 400px;" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><label style="font-size:8pt;">Enter your password for <span id="remotehost"></span> </label></td>
+          <td><input type="password" id="txtPasswdLeftId" value="" size="20" style="display:none;" />
+              <input type="password" id="txtPasswdRightId" value="" size="20" style="display:none;" />
+          </td>
+        </tr>
+      <tr><td colspan="2" style="text-align: right;">
+      <input type="submit" class="bluebutton" value="Submit" />
+      </td></tr>
+      </table>
+      <input type="hidden" id="hidPasswordType" value="" />
+    </div>
+  </form>
+  <div id="error_c" style="width: 80%;"></div>
+  <div id="files" style="display: none;">
+  <br/><br/>
+  <table style="width: 80%; border: 0px;" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+      <td colspan="2" style="font-size: 12px;"><b>Enter files to diff</b></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="font-size: 9px; text-color: #cccccc; padding-left:50px;"><label>Supported schemes for remote files are 'scp' (only on Linux), 'http' (readonly), and 'https' (readonly).</label></td>
+    </tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr>
+      <td align="right">Left File:</td><td><input type="text" size="80" id="left" /> </td>
+    </tr>
+    <tr>
+      <td align="right">Right File:</td><td><input type="text" size="80" id="right" /></td>
+    </tr>
+    <tr>
+      <td align="right">Read Only?</td><td><input type="checkbox" id="readonly"/></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td><td><input type="button" class="bluebutton" value="Get Diff" onclick="requestDiff();" style="width:200px;"/></td>
+    </tr>
+  </table></div>
+  <div id="menu" style="display: none;"></div>
+<div id="helper"></div>
+<form name="frmDiff" method="post" action="viewdiff.php">
+  <input type="hidden" id="hidHighlightedLine" value="-1"/>
+<br/>
+<ul id="edit_instr" class="instr" style="display: block; margin-bottom: 10px;"></ul>
+<div id="diff_table_c">
+</div>
+</form>
+</body>
+</html>

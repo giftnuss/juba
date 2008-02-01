@@ -1,0 +1,16 @@
+html,
+body {
+    /* height: 100%; */
+    overflow: auto;
+}
+
+td,
+th {
+    font-size:1.1em;
+}
+
+#helper {
+    position: absolute;
+    padding-left:0;
+    padding-right:0;
+}

@@ -1,0 +1,24 @@
+JSBlend 0.8.2
+=============
+
+* The biggest enhancement in this version is the ability to edit both files at the same time.
+* Optionally, either of the files can be treated as the merge target.
+* Several bugs with remote file access are fixed. 
+* Calling the jsblend.py command now automatically connects to a running server or starts the server if none is running.
+  Thus now it is a one-step process to start editing the diffs.
+
+
+JSBlend 0.8
+===========
+
+* This version supports reading and writing files from remote machines using following protocols:
+    scp   - Remote read/write supported. (Needs WinSCP installed on Windows.)
+    http  - Writes back to local machine
+    https - Writes back to local machine
+  The support is available only when using the built-in python webserver. 
+  See README file for more details.
+  
+* PHP backend is not supported any more. It may be removed in future releases.
+* A command line interface is now available. Run 'python jsblend.py -h' for more information.
+
+

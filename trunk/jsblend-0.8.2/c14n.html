@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <!--
+    Author: Nimish Pachapurkar
+    (C) 2007, SpikeSource, Inc.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <script language="Javascript" type="text/javascript" src="js/c14n.js"></script>
+    <script language="Javascript" type="text/javascript">
+      function canonicalize() {
+        var xml = document.getElementById("input").value;
+        var can = new c14n();
+        can.comments = true;
+        var out = can.canonicalize(xml);
+        //alert(out);
+        document.getElementById("output").value = out; //.replace(/\n/g, "<br/>");
+      }
+    </script>
+  </head>
+  <body>
+    Input:<br/>
+    <textarea style="background-color: rgb(245, 245, 245); font-family: monospace; font-size: 1em;" rows="20" cols="150" id="input"></textarea>
+    <br/>
+    <br/>
+    <input type="button" onclick="canonicalize()" value="Canonicalize"/>
+    <br/>
+    <br/>
+    Output:<br/>
+    <textarea readonly="true" style="background-color: rgb(230, 234, 230); font-family: monospace; font-size: 1em;" rows="20" cols="150" id="output"></textarea>
+  </body>
+</html>

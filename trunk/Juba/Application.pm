@@ -4,12 +4,8 @@
 # *******************
 ; use Sub::Uplevel
 
-; use Exporter ('import')
-
-; our @EXPORT = ('page')
-
-; use Carp
-; use CGI
+; use Carp ()
+; use CGI ()
 
 # remove this
 # <<<<
@@ -25,7 +21,7 @@
 # load cgi::Untaint but overwrite plugin loading mechanism.
 ; use Juba::Untaint
 
-; sub pages { carp 'abstract method "pages" called!' }
+; sub pages { Carp::carp 'abstract method "pages" called!' }
 
 ; sub dispatch
     { my $self = shift

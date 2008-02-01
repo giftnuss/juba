@@ -1,0 +1,74 @@
+<HTML>
+<BODY>
+<FONT SIZE='2'>
+<PRE>
+++++++++++secaudit.conf++++++++++<BR>
+-----INPUT-----<BR>
+php /opt/spikesource/var/www/localhost/htdocs/testing/phpsecaudit/run.php --src /opt/spikesource/var/www/localhost/htdocs/testing  --outdir /opt/spikesource/var/www/localhost/htdocs/testing/webide/output/sa  --format html<BR>
+-----OUTPUT-----<BR>
+Reporting Completed. Please check the results.
+
+<BR><BR>
+++++++++++checkstyle.conf++++++++++<BR>
+-----INPUT-----<BR>
+php /opt/spikesource/var/www/localhost/htdocs/testing/phpcheckstyle/run.php --src /opt/spikesource/var/www/localhost/htdocs/testing/phpcheckstyle  --outdir /opt/spikesource/var/www/localhost/htdocs/testing/webide/output/cs  --config /opt/spikesource/var/www/localhost/htdocs/testing/phpcheckstyle/config/pear.cfg.xml  --format html<BR>
+-----OUTPUT-----<BR>
+Reporting Completed. Please check the results.
+
+
+<BR><BR>
+++++++++++checkstyle.text.conf++++++++++<BR>
+-----INPUT-----<BR>
+php /opt/spikesource/var/www/localhost/htdocs/testing/phpcheckstyle/run.php --src /opt/spikesource/var/www/localhost/htdocs/testing/phpcheckstyle  --outdir /opt/spikesource/var/www/localhost/htdocs/testing/webide/output/cst  --config /opt/spikesource/var/www/localhost/htdocs/testing/phpcheckstyle/config/pear.cfg.xml  --format text<BR>
+-----OUTPUT-----<BR>
+Reporting Completed. Please check the results.
+
+
+<BR><BR>
+++++++++++coverage.conf++++++++++<BR>
+-----INPUT-----<BR>
+php /opt/spikesource/var/www/localhost/htdocs/testing/phpcoverage/src/cli/driver.php --local --report --print-summary  -p /opt/spikesource/var/www/localhost/htdocs/testing/phpcoverage/src/  --report-name "Code Coverage Report"  --report-dir /opt/spikesource/var/www/localhost/htdocs/testing/webide/output/cc/  --appbase-path /opt/spikesource/var/www/localhost/htdocs/testing/phpcoverage/samples/local  --test-driver /opt/spikesource/var/www/localhost/htdocs/testing/phpcoverage/samples/local/test_driver.php<BR>
+-----OUTPUT-----<BR>
+
+>>>>>>>>>>>>>>>>>>> Output from the test driver begins
+
+0.4252.9255.4257.92510.42512.9250.4252.9255.4257.92510.42512.92515.42517.92520.42522.925Something else
+in Sub class
+in Base class
+            <th>
+                &nbsp;str            </th>
+        <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ms="urn:schemas-microsoft-com:xslt" xmlns:dt="urn:schemas-microsoft-com:datatypes">
+           <xsl:output method="xml" />
+           <xsl:template match="/">hello
+?>?>still here
+there
+Caught exception: Always throw this error
+<br/>
+Example of string
+spanning multiple lines
+using heredoc syntax.
+
+Output from the test driver ends <<<<<<<<<<<<<<<<<<<<<
+
+##############################################
+ Code Coverage Summary: Code Coverage Report
+   Total Files: 5
+   Total Lines: 219
+   Total Covered Lines of Code: 74
+   Total Missed Lines of Code: 16
+   Total Lines of Code: 90
+   Code Coverage: 82.22%
+##############################################
+
+<BR><BR>
+++++++++++secaudit.text.conf++++++++++<BR>
+-----INPUT-----<BR>
+php /opt/spikesource/var/www/localhost/htdocs/testing/phpsecaudit/run.php --src /opt/spikesource/var/www/localhost/htdocs/testing  --outdir /opt/spikesource/var/www/localhost/htdocs/testing/webide/output/sat  --format text<BR>
+-----OUTPUT-----<BR>
+Reporting Completed. Please check the results.
+
+<BR><BR>
+</PRE>
+</FONT>
+</BODY>
+</HTML>

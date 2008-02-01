@@ -1,0 +1,22 @@
+Revision By: Ashwin Kumar <ashwink3029@gmail.com>
+Date: 8/2/07
+
+                        Spike Web IDE Release Notes
+                        ===========================
+
+ * TODO
+
+  -  At the moment, Web IDE can only do single flush command line executions. If some repetitive
+process requires several separate commands, a plugin will be impossible. To modify for this,
+some sort of looping would be required when searching for 'execution.value' tags.
+  - change 'Add New Tool' to 'Upload New Tool' w/ browse interface
+  * Validity Checks on Corresponding conf Tags
+  - caching implementation on generated forms
+  - META tags on individual tools themselves
+  - certification - individual tools & collection
+
+
+Version 0.4
+-----------
+
+This is the very first release of Web IDE. It is an alpha release.
