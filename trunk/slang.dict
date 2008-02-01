@@ -1,0 +1,7 @@
+bloat http://www.mozilla.org/projects/xpcom/nsCOMPtr/bloat.html
+   scope is <code bloat>
+   note
+      Ein interessanter Text über C++ und C Entwicklung.
+      author: Scott Collins
+      date: 12.Mai 1999
+      

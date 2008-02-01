@@ -1,0 +1,17 @@
+
+<services shell="bash">
+   <service type="visual">
+       <name>Spike Web IDE</name>
+       <port>8887</port>
+       <command>(cd spikewebide-0.4 && python ideserver.py)</command>
+   </service>
+   <service type="visual">
+       <name>jsblend-0.8.2</name>
+       <provides>
+           <ressource type="program code" language="javascript">
+               <url>/jsblend-0.8.2/scriptaculous/lib/prototype.js</url>
+               <version>1.5.0</version>
+           </ressource>
+       </provides>
+   </service>
+</services>
