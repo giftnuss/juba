@@ -1,20 +1,46 @@
   package Juba::Dot
 # *****************
-; our $VERSION='0.01'
+; our $VERSION='0.02'
 # *******************
 ; use strict; use warnings
 
 ; use Package::Subroutine
 ; use Package::Subroutine::Functions qw/setglobal getglobal/
+
+# the . object
+
+# it is a possible base class for secondary elements    
+
+; use HO::class
+    _ro => name => '$',
+    _rw => args => '@'
+    
+; our @EXPORT =
+    ( 'AUTOLOAD' # define accessors via exporeted AUTOLOAD
+    , 'Class'    # set package name
+    , 'has'      # creates the accessor in the base class
+    , 'define'   # this creates accessors in the package itself
+    , 'extends'  # usual function to describe a inheritance
+    , 'coreelement' # defines the constructor name
+    , 'dot'      # closes the class definition and builds the package
+    )
   
 ; sub import
     { my $pkg = shift
+    ; @_ = @EXPORT unless @_
     # this could be called: export_what_I_can
     ; export Package::Subroutine:: _ => grep { $pkg->can($_) } @_
+    
+    # without that barewords throwing an exception
+    ; strict->unimport('subs')
+    ; warnings->unimport('reserved')
     }
 
-# it is a possible base class for secondary elements    
-; use HO::class
+; our $AUTOLOAD
+
+; sub AUTOLOAD
+    { warn $AUTOLOAD
+    }
     
 # this stores the package name or so for Class
 ; my $class
@@ -36,7 +62,7 @@
     }
 
 ; sub coreelement
-    { my $package = caller
+    { my $package = caller; warn " @_ "; return
     ; my ($subroutine,$subref) = @_
     
     # isa checken
@@ -64,13 +90,13 @@
 
 # 
 ; sub has
-    { my $package = caller
+    { my $package = caller; warn " @_ "; return
     ; my ($sub,%props) = @_
     ; my $subref = $props{'run'} || sub { print "Hallo" }
     ; setglobal($package,'%export',[$sub => $subref])
     }
     
-
+; sub dot {}
 
 ; 1
   
