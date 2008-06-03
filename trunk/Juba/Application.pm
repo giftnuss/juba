@@ -1,22 +1,20 @@
   package Juba::Application
 # *************************
+; use Sub::Uplevel
+; use strict; use warnings
 ; our $VERSION='0.01'
 # *******************
-; use Sub::Uplevel
 
 ; use Carp ()
 ; use CGI ()
 
-# remove this
-# <<<<
-; use lib '/home/ccls22/sknpp/HO/lib'
-; use lib '/home/ccls22/sknpp/Package-Subroutine/lib'
-# >>>>
+; BEGIN
+    { my @sknpp_libs = ('HO','Package-Subroutine')
+    ; my $here = [caller(0)]->[1] =~ /(.*)\/Juba/ && $1
+    ; my @load = map { "'$here/sknpp/$_/lib'" } @sknpp_libs
 
-; use lib 'lib-cpan/'
-; use lib 'lib-cpan/Hash-Path/lib/'
-
-; use lib 'Recipe/lib/'
+    ; eval "use lib ".join(',',@load)
+    }
 
 # load cgi::Untaint but overwrite plugin loading mechanism.
 ; use Juba::Untaint
