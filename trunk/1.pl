@@ -1,25 +1,26 @@
 ; use strict; use warnings; use utf8
 
-# Unter mod_perl is das aktuelle Verzeichnis == '/'
-; use lib '/home/ccls22/public_html/perl'
-; use lib '/home/ccls22/public_html/perl/lib-cpan'
-
-; sub ok 
-    { if($_[0])
-        { print "ok"
-        }
-      else
-        { print "not ok"
-        }
-    ; print " -- @_ " if $_[1]
-    ; print "\n"
+; BEGIN 
+    { my $here = [caller(0)]->[1] =~ /(.*)\// && $1
+    ; eval "use lib '$here','$here/lib-cpan'"
     }
-
-#; use Cwd ()
-#; print Cwd::getcwd,"\n";
 
 ; use Juba::Application
 ; use CGI::Carp 'fatalsToBrowser'
+
+; BEGIN
+    { sub ok 
+        { if($_[0])
+            { print "ok"
+            }
+          else
+            { print "not ok"
+            }
+        ; print " -- @_ " if $_[1]
+        ; print "\n"
+        }
+    }
+
 
 # load Untaint Modules
 ; use Juba::Untaint::filepath

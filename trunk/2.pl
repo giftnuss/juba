@@ -1,13 +1,14 @@
-  use Juba::Application
-# Unter mod_perl is das aktuelle Verzeichnis == '/'
-; use lib '/home/ccls22/public_html/perl'
-; use lib '/home/ccls22/public_html/perl/lib-cpan'
-; use lib '/home/ccls22/sknpp/basis/lib'
+; use strict; use warnings; use utf8
 
+; BEGIN 
+    { my $here = [caller(0)]->[1] =~ /(.*)\// && $1
+    ; eval "use lib '$here','$here/lib-cpan'"
+    }
+
+; use Juba::Application
 ; use CGI::Carp 'fatalsToBrowser'
 
 ; use Sliced::Bread
-; use strict
 
 ; print "ok\n"
 
