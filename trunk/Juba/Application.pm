@@ -10,7 +10,7 @@
 
 ; BEGIN
     { my @sknpp_libs = ('HO','Package-Subroutine')
-    ; my $here = [caller(0)]->[1] =~ /(.*)\/Juba/ && $1
+    ; my $here = [caller(0)]->[1] =~ /(.*)\/Juba/ && $1 || '.'
     ; my @load = map { "'$here/sknpp/$_/lib'" } @sknpp_libs
 
     ; eval "use lib ".join(',',@load)

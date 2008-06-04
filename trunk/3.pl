@@ -1,7 +1,7 @@
 ; use strict; use warnings; use utf8
 
 ; BEGIN 
-    { my $here = [caller(0)]->[1] =~ /(.*)\// && $1
+    { my $here = [caller(0)]->[1] =~ /(.*)\// && $1 || '.'
     ; eval "use lib '$here','$here/lib-cpan'"
     }
 

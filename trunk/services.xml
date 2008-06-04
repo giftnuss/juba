@@ -1,9 +1,11 @@
-
-<services shell="bash">
+<?xml version="1.0" encoding="utf8" ?>
+<services>
    <service type="visual">
        <name>Spike Web IDE</name>
        <port>8887</port>
-       <command>(cd spikewebide-0.4 && python ideserver.py)</command>
+       <command shell="bash">
+          (cd spikewebide-0.4 && python ideserver.py)
+       </command>
    </service>
    <service type="visual">
        <name>jsblend-0.8.2</name>
