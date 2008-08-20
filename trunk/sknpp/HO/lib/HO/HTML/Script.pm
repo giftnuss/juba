@@ -16,24 +16,30 @@
 ; sub Javascript
     { my (@args) = @_
     ; my $opts = { type => "text/javascript" }
+    
     ; if(ref $args[0] eq 'HASH')
         { $opts =  {%$opts, %{shift @args}}
         }
+
     ; my $tag = Script()
     ; $tag->type($opts->{'type'}) if $opts->{'type'}
     
     ; unless($opts->{'nocomment'})
         { my $node = node(@args)
-        ; $tag << "<!--//" << newline() << $node << newline() << "//-->" 
+        ; $tag << node("<!--//") << newline() << $node << newline() << node("//-->")
         ; $tag->insertpoint($node)
         }
+      else
+        { $tag << node(@args)
+        }
+        
     ; return $tag
     }
     
 ; sub JavascriptNC
     { my (@args) = @_
     ; my $opts = {}
-    ; $opts = shift @args if(ref $args[0] eq 'HASH')
+    ; $opts = shift @args if ref $args[0] eq 'HASH'
     ; $opts->{'nocomment'} = 1
     ; unshift @args, $opts
     ; return Javascript(@args)
