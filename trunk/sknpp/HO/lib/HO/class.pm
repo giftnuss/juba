@@ -127,7 +127,7 @@
 ; sub make_subclass
   { my %args = @_
   ; $args{'of'}   ||= [ "".caller(1) ]
-  ; $args{'name'} || Carp::croak 'no name'
+  ; $args{'name'} || Carp::croak('no name')
   ; $args{'in'}   ||= $args{'of'}->[0]
   ; unless($args{'code'})
       { if(ref $args{'codegen'})

@@ -76,12 +76,4 @@ __PERL__
 __END__
 
 
-; sub create_tag
-    { my ($class,$pack,$base,$tag)=@_
-    ; return if $defined{$pack}
-    ; eval qq~ package $pack; our \@ISA = qw($base)
-             ; sub new { shift()->SUPER::new("$tag",\@_) }
-             ~
-    ; $defined{$pack}++
-    }
 

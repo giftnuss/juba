@@ -41,10 +41,9 @@
     ; return join("",$self->content)
     }
 
-
+# better return a array ref in scalar context?
 ; sub content
     { return @{$_[0]->_thread} }
-
 
 ; sub concat
     { my ($o1,$o2,$reverse)=@_
@@ -70,6 +69,8 @@
 # this helps to overwrite copy
 ; sub duplicate
     { my ($obj,$duplicate) = @_
+    ; $duplicate ||= ref($obj)->new
+    
     ; my @props = @{$obj}
     ; for my $prop (0..$#props)
         { if(ref $obj->[$prop] eq 'HASH')

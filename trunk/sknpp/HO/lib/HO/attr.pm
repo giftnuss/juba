@@ -38,6 +38,12 @@
     ; $obj->set_attribute($_,$attr{$_}) for keys %attr
     ; $obj
     }
+    
+; sub set_attributes_hashref
+    { my ($obj,$attr)=@_
+    ; $obj->set_attribute($_,$attr->{$_}) for keys %$attr
+    ; $obj
+    }
 
 ; sub attributes_string
     { my ($self) = @_
