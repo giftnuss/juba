@@ -26,7 +26,7 @@
 ; sub _begin_endtag () { '</'  } # inline
 
 ; sub is_single_tag
-    { return $_[0]->count <= 1
+    { return $_[0]->count < 1
     }
 
 ; sub string
@@ -67,6 +67,10 @@
     ; @{$_[0]->_thread} = ($_[0]->_tag)
     ; $_[0]->insert(@args)
     }
+    
+; sub count
+   { return @{$_[0]->_thread} - 1
+   }
 
 ; 1
 
