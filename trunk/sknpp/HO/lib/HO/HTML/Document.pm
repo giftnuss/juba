@@ -18,7 +18,7 @@
     ; my $doctype   = _doctype($p{'doctype'} || 'transitional')
     ; my $titletext = $p{'title'} || ''
     ; my $metatags  = $p{'metatags'} || []
-    ; my $root      = node() # new HO::HTML::Document::Type
+    ; my $root      = node()
  
     ; my %slot=
         ( head   => HO::HTML::Head()
@@ -51,13 +51,12 @@
     ( html2 => 
     '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">'
     , transitional =>
-    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
+    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
     , strict =>
-    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 //EN"
             "http://www.w3.org/TR/html4/strict.dtd">'
     , frameset =>
-    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">'
-    , none => ''
+    '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">'
     )
     
 ; sub _doctype

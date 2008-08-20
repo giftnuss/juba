@@ -171,7 +171,7 @@
 ; sub string
     { my $self=shift
     ; my $r   = ""
-    ; my @list = $self->content
+    ; my @list = @{$self->_thread}
     ; my ($c,$i) = splice(@list,0,2)
     
     ; $r .= $self->_begin_tag . 'If: ' . $c . $self->_close_tag . $i

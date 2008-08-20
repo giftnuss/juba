@@ -37,7 +37,7 @@
     }
 
 ; sub _single_tag
-    { my ($tag,@thread)=$_[0]->content
+    { my ($tag,@thread) = @{$_[0]->_thread}
 	  
     ; my $r = $_[0]->_begin_tag . $_[0]->_tag . $_[0]->attributes_string . $_[0]->_close_stag
 	  
@@ -46,7 +46,7 @@
     }
 
 ; sub _double_tag
-    { my ($tag,@thread)=$_[0]->content
+    { my ($tag,@thread) = @{$_[0]->_thread}
 
     ; my $r = $_[0]->_begin_tag . $_[0]->_tag . $_[0]->attributes_string() . $_[0]->_close_tag
 
@@ -57,9 +57,15 @@
     }
 
 # overwritten methods
+; sub content
+    { my ($tag,@content) = @{$_[0]->_thread}
+    ; return @content
+    }
+
 ; sub replace
     { my ($self,@args)  = @_
-    ; @{$_[0]->_thread} = ($_[0]->_tag,@args)
+    ; @{$_[0]->_thread} = ($_[0]->_tag)
+    ; $_[0]->insert(@args)
     }
 
 ; 1

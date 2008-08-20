@@ -262,6 +262,32 @@ __PERL__
         }
     ; Carp::croak "Header element class 'h$level' not initialized."
     }
+    
+#############################
+# Factory
+#############################
+; sub factory
+    { my $tagname = shift
+    ; return html_element($tagname)->(@_)
+    }
+    
+; sub html_element
+    { my ($tagname) = @_
+    ; our @elements
+    ; my %elements = @elements
+    
+    ; my $def = $elements{lc($tagname)}
+        or Carp::croak("Unknown tag '$tagname'.")
+        
+    ; my $func = HO::HTML->can($def->[1])
+        or Carp::croak("Undefined function HO::HTML::" . $def->[1]. ".")
+    
+    ; return $func
+    }
+
+; use Memoize
+; memoize('html_element')
+; no Memoize
 
 ; 1
 
@@ -275,69 +301,4 @@ HO::HTML
 
    * import functional for subclasses does not work
 
-    
-; sub _make_tags
-  { my $baseclass = caller(0)
-  ; my %args = @_
-  ; my @tags = @{$args{'tags'}}
-  ; push @TAGS,@tags
-	
-  ; foreach my $tag (@tags)
-      { HO::class::make_subclass
-	    ( of => [ $baseclass ]
-	    , shortcut_in  => 'HO::HTML'
-	    , name         => $tag
-	    , codegen      => $args{'codegen'}
-      )}
-  }
-  
-; package HO::HTML::Double
-; use base qw/HO::tag HO::attr::autoload HO::insertpoint/
-  
-; our @TAGS = qw
-  ( Html Head Title Body
-    A Big Div P Pre Small Span Sub Sup
-    Caption Colgroup Col Table Thead Tbody Tfoot Tr Th Td
-    Ol Ul Li Dl Dd Dt
-    Blockquote Q
-    Button Fieldset Form Label Legend Option Select Textarea 
-  )
-  
-; sub create_tags
-  { HO::HTML::_make_tags
-    ( tags    => $_[1]
-    , codegen => sub 
-        { my %args = @_; return sprintf <<'__PERL__'
-	      
-  sub init 
-      { my ($self,@args)=@_
-      ; $self->_is_single_tag(0)
-      ; $self->insert("%s",@args)
-      }
-
-__PERL__
-	, lc($args{'name'})
-	}
-    )
-  }
-
-; __PACKAGE__->create_tags(\@TAGS)
-  
-; package HO::HTML::Single
-; use base qw/HO::tag HO::attr::autoload HO::insertpoint/
-  
-; our @TAGS = qw(Br Hr Img Input)
-
-; sub _close_stag   () { ' >' } # inline
-
-; HO::HTML::_make_tags(tags => \@TAGS
-    , codegen =>
-        sub { my %args = @_
-	    ; 'sub init {my ($self,@args)=@_'
-	     .';$self->_is_single_tag(1)'
-	     .';$self->insert("'.lc($args{'name'}).'",@args)}'
-	    }
-    )
-
-; 1
-
+ 
