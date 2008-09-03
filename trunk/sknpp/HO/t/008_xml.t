@@ -1,5 +1,5 @@
 ; use strict; use warnings
-; use Test::More tests => 3
+; use Test::More tests => 4
 
 ; BEGIN { use_ok('HO::XML') }
 
@@ -8,11 +8,17 @@
 
 ; use HO::class _method => 'namespace^cs' => sub { 'xml' }
 
+; package main
+
 ; my $tag = new X::ML('code')
-; Test::More::is("$tag",'<xml:code />')
 
-; Test::More::is($tag->namespace,"xml")
+; is("$tag",'<xml:code />')
 
+; is($tag->namespace,"xml")
+
+; $tag = new X::ML('what','next')
+
+; is("$tag",'<xml:what>next</xml:what>')
 
 __END__
 

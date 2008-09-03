@@ -12,7 +12,6 @@
     
 ; sub _single_tag
     { my ($self) = @_
-    ; my ($tag,@thread) = $self->content
 	  
     ; my $r = $self->_begin_tag
     ; $r   .= $self->namespace . ':' if $self->namespace
@@ -22,7 +21,6 @@
     
 ; sub _double_tag
     { my ($self) = @_
-    ; my ($tag,@thread)=$_[0]->content
 
     ; my $begin = $self->_begin_tag
     ; my $end   = $self->_begin_endtag
@@ -32,8 +30,9 @@
         } 
     ; $begin .= $self->_tag . $self->attributes_string() . $self->_close_tag
     ; $end   .= $_[0]->_tag . $_[0]->_close_tag
-    ; $begin .= ref($_) ? "$_" : $_ foreach @thread
-
+    ; foreach my $cld ($_[0]->content)
+        { $begin .= "$cld" 
+        }
     ; return $begin.$end
     }
 
