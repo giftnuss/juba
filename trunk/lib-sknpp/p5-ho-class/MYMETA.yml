@@ -1,0 +1,21 @@
+---
+abstract: 'class builder for hierarchical objects'
+author:
+  - 'Sebastian Knapp <sk@computer-leipzig.com>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  Module::Build: 0.35
+generated_by: 'Module::Build version 0.3507'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: HO-class
+requires:
+  Package::Subroutine: 0.06
+  perl: v5.6.0
+resources:
+  homepage: http://github.com/giftnuss/p5-ho-class/tree/master
+  repository: git://github.com/giftnuss/p5-ho-class.git
+version: 0.05

@@ -1,0 +1,16 @@
+Build.PL
+Changes
+MANIFEST
+Makefile.PL
+README
+lib/HO/abstract.pm
+lib/HO/accessor.pm
+lib/HO/class.pm
+t/01_load.t
+t/04_accessor.t
+t/07_class.t
+t/95_pod.t
+t/96_pod-coverage.t
+t/97_boilerplate.t
+t/98_minimum_version.t
+t/99_distribution.t
